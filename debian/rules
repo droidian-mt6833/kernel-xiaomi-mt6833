@@ -1,0 +1,18 @@
+#!/usr/bin/make -f
+
+include /usr/share/linux-packaging-snippets/kernel-snippet.mk
+
+# Use external device-tree-compiler
+BUILD_COMMAND := $(BUILD_COMMAND) LLVM=1 \
+                        LD=ld.lld \
+                        AR=llvm-ar \
+                        NM=llvm-nm \
+                        OBJCOPY=llvm-objcopy \
+                        OBJDUMP=llvm-objdump \
+                        STRIP=llvm-strip \
+                        CONFIG_NO_ERROR_ON_MISMATCH=y
+
+%:
+	dh $@
+override_dh_dwz:
+override_dh_strip:
